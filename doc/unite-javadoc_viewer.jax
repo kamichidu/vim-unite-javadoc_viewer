@@ -53,6 +53,11 @@ TODO
     $ cpanm URI
     $ cpanm Web::Scraper
 <
+上記コマンドが失敗する場合、次のコマンドでインストールできるかもしれない。
+>
+    $ sudo cpan URI
+    $ sudo cpan Web::Scraper
+<
 ==============================================================================
 インストール                           *unite-javadoc_viewer-install*
 
