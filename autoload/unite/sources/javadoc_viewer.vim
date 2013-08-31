@@ -91,47 +91,8 @@ function! s:source.async_gather_candidates(args, context) " {{{
         return map(l:candidates, 'eval(v:val)')
     endif
 
-    let l:success= 0
+    let [l:success, l:candidates]= javadoc_viewer#if_perl#gather_candidates(l:uri)
 
-    perl << EOQ
-    use strict;
-    use warnings;
-    use URI;
-    use Web::Scraper;
-    use JSON::PP;
-
-    my $uri= eval {
-        my @uri= VIM::Eval('l:uri');
-
-        die q/can't get vim variable in if_perl./ unless $uri[0];
-
-        URI->new($uri[1]);
-    };
-    die $@ if $@;
-
-    my $res= scraper {
-        process 'div.indexContainer li>a[href]', 'links[]' => '@href';
-    }->scrape(URI->new_abs('allclasses-noframe.html', $uri));
-
-    my @result= map {
-        my $link= $_;
-
-        # link -> canonical_name
-        my $canonical_name= URI->new($link)->rel($uri);
-
-        $canonical_name=~ s{/}{.}g;
-        $canonical_name=~ s{\.html$}{};
-
-        {
-            word => $canonical_name, 
-            kind => 'uri', 
-            action__path => $link->as_string, 
-        }
-    } @{$res->{links}};
-
-    VIM::DoCommand('let l:candidates= ' . encode_json(\@result));
-    VIM::DoCommand('let l:success= 1');
-EOQ
     if l:success
         if s:C.check_old_cache(a:context.source__cache_dir, l:uri)
             call s:C.deletefile(a:context.source__cache_dir, l:uri)
