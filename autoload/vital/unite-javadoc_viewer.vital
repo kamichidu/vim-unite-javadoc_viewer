@@ -3,3 +3,5 @@
 Data.List
 Vim.BufferManager
 System.Cache
+Web.HTTP
+Web.HTML

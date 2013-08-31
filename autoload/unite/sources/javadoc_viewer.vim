@@ -34,14 +34,26 @@ set cpo&vim
 let s:V= vital#of('unite-javadoc_viewer')
 let s:L= s:V.import('Data.List')
 let s:C= s:V.import('System.Cache')
+let s:HP= s:V.import('Web.HTTP')
+let s:HL= s:V.import('Web.HTML')
+let s:BM= s:V.import('Vim.BufferManager').new()
 unlet s:V
 
 let s:source= {
-\   'name'           : 'javadoc_viewer',
-\   'description'    : 'a javadoc viewer using unite.',
-\   'sorters'        : ['sorter_word'],
-\   'max_candidates' : 100,
-\   'hooks'          : {}, 
+\   'name':           'javadoc_viewer',
+\   'description':    'a javadoc viewer using unite.',
+\   'sorters':        ['sorter_word'],
+\   'max_candidates': 100,
+\   'hooks':          {},
+\   'action_table':   {
+\       'uri': {
+\           'show': {
+\               'description': 'print the javadoc on the preview window.', 
+\               'is_quit':     0, 
+\           }, 
+\       }, 
+\   }, 
+\   'default_action': {'uri': 'show'}, 
 \}
 function! unite#sources#javadoc_viewer#define() " {{{
     return s:source
@@ -108,7 +120,8 @@ function! s:source.async_gather_candidates(args, context) " {{{
 
         {
             word => $canonical_name, 
-            action__uri => $link->as_string, 
+            kind => 'uri', 
+            action__path => $link->as_string, 
         }
     } @{$res->{links}};
 
@@ -126,6 +139,28 @@ EOQ
     else
         return []
     endif
+endfunction
+" }}}
+
+" show javadoc
+function! s:source.action_table.uri.show.func(candidate) " {{{
+    if empty(a:candidate.action__path)
+        return
+    endif
+
+    let l:response= s:HP.get(a:candidate.action__path)
+    if !l:response.success
+        return
+    endif
+
+    let l:dom= s:HL.parse(l:response.content)
+    let l:dom= l:dom.find('div', {'class': 'description'})
+
+    call s:BM.open('javadoc')
+    setlocal bufhidden=hide buftype=nofile noswapfile nobuflisted readonly
+    silent % delete _
+    silent 1 put =l:dom.value()
+    call cursor(1, 1)
 endfunction
 " }}}
 
