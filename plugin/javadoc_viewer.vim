@@ -37,10 +37,8 @@ let s:save_cpo= &cpo
 set cpo&vim
 
 let g:javadocviewer_config= get(g:, 'javadocviewer_config', {})
-" let g:javadocviewer_config.uri= get(g:javadocviewer_config, 'uri', [])
-let g:javadocviewer_config.uri= ['http://docs.oracle.com/javase/7/docs/api/']
-" let g:javadocviewer_config.cache_dir= get(g:javadocviewer_config, 'cache_dir', g:unite_data_directory . '/javadocviewer/')
-let g:javadocviewer_config.cache_dir= './cache/'
+let g:javadocviewer_config.uri= get(g:javadocviewer_config, 'uri', [])
+let g:javadocviewer_config.cache_dir= get(g:javadocviewer_config, 'cache_dir', g:unite_data_directory . '/.javadocviewer/')
 
 let &cpo= s:save_cpo
 unlet s:save_cpo
