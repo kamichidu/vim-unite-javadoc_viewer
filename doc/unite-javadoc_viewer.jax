@@ -1,0 +1,93 @@
+*unite-javadoc_viewer.jax*  日本語ヘルプ
+
+Version:     0.01
+Last Change: 31-Aug-2013.
+Maintainer:  kamichidu <c.kamunagi@gmail.com>
+License:     The MIT License (MIT) {{{
+
+             Copyright (c) 2013 kamichidu
+
+             Permission is hereby granted, free of charge, to any person
+             obtaining a copy of this software and associated documentation
+             files (the "Software"), to deal in the Software without
+             restriction, including without limitation the rights to use,
+             copy, modify, merge, publish, distribute, sublicense, and/or
+             sell copies of the Software, and to permit persons to whom the
+             Software is furnished to do so, subject to the following
+             conditions:
+
+             The above copyright notice and this permission notice shall be
+             included in all copies or substantial portions of the Software.
+
+             THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+             EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+             OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+             NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+             HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+             WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+             FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+             OTHER DEALINGS IN THE SOFTWARE.
+}}}
+
+目次                                       *unite-javadoc_viewer-contents*
+
+    概要                                   |unite-javadoc_viewer-introduction|
+    注意                                   |unite-javadoc_viewer-warning|
+    インストール                           |unite-javadoc_viewer-install|
+    変数                                   |unite-javadoc_viewer-variable|
+    更新履歴                               |unite-javadoc_viewer-changelog|
+
+==============================================================================
+概要                                   *unite-javadoc_viewer-introduction*
+
+TODO
+
+==============================================================================
+注意                                   |unite-javadoc_viewer-warning|
+
+このプラグインはif_perlを使用してる。
+そのため、実行には|if_perl|つきでコンパイルされたvimが必要である。
+
+実行前に、次のコマンドで依存モジュールをインストールする必要がある。
+>
+    $ cpanm URI
+    $ cpanm Web::Scraper
+<
+==============================================================================
+インストール                           *unite-javadoc_viewer-install*
+
+neobundleを使用している場合、.vimrcに次の設定を行うことでインストールできる。
+>
+    NeoBundle 'KamunagiChiduru/unite-javadoc_viewer', {
+    \   'depends': ['Shougo/unite.vim'], 
+    \}
+<
+==============================================================================
+変数                                   *unite-javadoc_viewer-variable*
+
+g:javadocviewer_config                        *g:javadocviewer_config*
+
+- uri (default: [])
+
+    javadocを閲覧したいURIのListを指定する。
+    e.g. >
+        let g:javadocviewer_config.uri= [
+        \   'http://docs.oracle.com/javase/7/docs/api/', 
+        \]
+    <
+
+- cache_dir (default: g:unite_data_directory . '/.javadoc_viewer/')
+
+    キャッシュの保存先ディレクトリを指定する。
+
+==============================================================================
+更新履歴                               *unite-javadoc_viewer-changelog*
+
+https://github.com/KamunagiChiduru/unite-javadoc_viewer/commits/master
+
+0.01 31-Aug-2013.
+
+    * 公開
+
+vim:tw=78:ts=4:ft=help:norl:et:fen:fdl=0:fdm=marker:
+
