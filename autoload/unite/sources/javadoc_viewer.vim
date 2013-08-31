@@ -34,8 +34,7 @@ set cpo&vim
 let s:V= vital#of('unite-javadoc_viewer')
 let s:L= s:V.import('Data.List')
 let s:C= s:V.import('System.Cache')
-let s:HP= s:V.import('Web.HTTP')
-let s:HL= s:V.import('Web.HTML')
+let s:H= s:V.import('Web.HTTP')
 let s:BM= s:V.import('Vim.BufferManager').new()
 unlet s:V
 
@@ -113,18 +112,19 @@ function! s:source.action_table.uri.show.func(candidate) " {{{
         return
     endif
 
-    let l:response= s:HP.get(a:candidate.action__path)
+    let l:response= s:H.get(a:candidate.action__path)
     if !l:response.success
         return
     endif
 
-    let l:dom= s:HL.parse(l:response.content)
-    let l:dom= l:dom.find('div', {'class': 'description'})
+    " TODO get formatter name from candidate?
+    let l:formatter= g:javadocviewer_config.formatter
+    let l:text= javadoc_viewer#formatter#{l:formatter}#format(l:response.content)
 
     call s:BM.open('javadoc')
     setlocal bufhidden=hide buftype=nofile noswapfile nobuflisted readonly
     silent % delete _
-    silent 1 put =l:dom.value()
+    silent 1 put =l:text
     call cursor(1, 1)
 endfunction
 " }}}

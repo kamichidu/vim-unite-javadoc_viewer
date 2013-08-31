@@ -1,5 +1,5 @@
 " ----------------------------------------------------------------------------
-" File:        plugin/javadoc_viewer.vim
+" File:        autoload/javadoc_viewer/formatter/simple.vim
 " Last Change: 31-Aug-2013.
 " Maintainer:  kamichidu <c.kamunagi@gmail.com>
 " License:     The MIT License (MIT) {{{
@@ -28,18 +28,19 @@
 "              OTHER DEALINGS IN THE SOFTWARE.
 " }}}
 " ----------------------------------------------------------------------------
-if exists('g:loaded_javadocviewer') && g:loaded_javadocviewer
-    finish
-endif
-let g:loaded_javadocviewer= 1
-
 let s:save_cpo= &cpo
 set cpo&vim
 
-let g:javadocviewer_config= get(g:, 'javadocviewer_config', {})
-let g:javadocviewer_config.uri= get(g:javadocviewer_config, 'uri', [])
-let g:javadocviewer_config.cache_dir= get(g:javadocviewer_config, 'cache_dir', g:unite_data_directory . '/.javadocviewer/')
-let g:javadocviewer_config.formatter= get(g:javadocviewer_config, 'formatter', 'simple')
+let s:V= vital#of('unite-javadoc_viewer')
+let s:H= s:V.import('Web.HTML')
+unlet s:V
+
+function! javadoc_viewer#formatter#simple#format(text)
+    let l:dom= s:H.parse(a:text)
+    let l:dom= l:dom.find('div', {'class': 'description'})
+
+    return l:dom.value()
+endfunction
 
 let &cpo= s:save_cpo
 unlet s:save_cpo

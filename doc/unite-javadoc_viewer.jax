@@ -35,6 +35,7 @@ License:     The MIT License (MIT) {{{
     注意                                   |unite-javadoc_viewer-warning|
     インストール                           |unite-javadoc_viewer-install|
     変数                                   |unite-javadoc_viewer-variable|
+    フォーマッタ                           |unite-javadoc_viewer-formatter|
     更新履歴                               |unite-javadoc_viewer-changelog|
 
 ==============================================================================
@@ -84,6 +85,42 @@ g:javadocviewer_config                        *g:javadocviewer_config*
 - cache_dir (default: g:unite_data_directory . '/.javadoc_viewer/')
 
     キャッシュの保存先ディレクトリを指定する。
+
+- formatter (default: 'simple')
+
+    取得したhtmlを、バッファで表示するための文字列に整形するフォーマッタ名を
+    指定する。
+
+==============================================================================
+フォーマッタ                           *unite-javadoc_viewer-formatter*
+
+フォーマッタはhtmlを受け取って、バッファに表示するテキストを返却する。
+新たにフォーマッタを作成することで、取得したhtmlをパースし、自分好みの
+形式でjavadocを閲覧することができる。
+
+使用するフォーマッタを切り替えるためには、次のようにする。
+>
+    let g:javadocviewer_config.formatter= '使用したいフォーマッタ名'
+<
+フォーマッタの作成方法を、次に示す。
+
+------------------------------------------------------------------------------
+フォーマッタの作成
+
+まずこれから作成するフォーマッタの名前を決める必要がある。
+フォーマッタの名前は、vimの関数名として有効な名前でなければならない。
+名前を決めたら、|'runtimepath'|内のディレクトリに次のファイルを作成する。
+
+    `autoload/javadoc_viewer/formatter/{formatter_name}.vim`
+
+そして、次の形式でautoload関数を定義する。
+>
+    function! javadoc_viewer#formatter#{formatter_name}#format(text)
+    endfunction
+<
+定義した関数には、引数としてhtml文字列が渡される。
+後はhtml文字列を切り刻み、自分好みに表示される形に整形した文字列を返せばよい。
+|javadoc_viewer|は、フォーマッタが返した文字列をそのままバッファに表示する。
 
 ==============================================================================
 更新履歴                               *unite-javadoc_viewer-changelog*
