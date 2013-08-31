@@ -56,7 +56,11 @@ let s:source= {
 \   'default_action': {'uri': 'show'}, 
 \}
 function! unite#sources#javadoc_viewer#define() " {{{
-    return s:source
+    if has('perl')
+        return s:source
+    else
+        return {}
+    endif
 endfunction
 " }}}
 
