@@ -1,6 +1,6 @@
 *unite-javadoc_viewer.jax*  日本語ヘルプ
 
-Version:     0.01
+Version:     0.02
 Last Change: 31-Aug-2013.
 Maintainer:  kamichidu <c.kamunagi@gmail.com>
 License:     The MIT License (MIT) {{{
@@ -126,6 +126,10 @@ g:javadocviewer_config                        *g:javadocviewer_config*
 更新履歴                               *unite-javadoc_viewer-changelog*
 
 https://github.com/KamunagiChiduru/unite-javadoc_viewer/commits/master
+
+0.02 31-Aug-2013.
+
+    * フォーマッタを追加
 
 0.01 31-Aug-2013.
 
