@@ -1,5 +1,5 @@
 " ----------------------------------------------------------------------------
-" File:        plugin/javadoc_viewer.vim
+" File:        autoload/javadoc_viewer.vim
 " Last Change: 03-Sep-2013.
 " Maintainer:  kamichidu <c.kamunagi@gmail.com>
 " License:     The MIT License (MIT) {{{
@@ -28,20 +28,25 @@
 "              OTHER DEALINGS IN THE SOFTWARE.
 " }}}
 " ----------------------------------------------------------------------------
-if exists('g:loaded_javadocviewer') && g:loaded_javadocviewer
-    finish
-endif
-let g:loaded_javadocviewer= 1
-
 let s:save_cpo= &cpo
 set cpo&vim
 
-let g:javadocviewer_config= get(g:, 'javadocviewer_config', {})
-let g:javadocviewer_config.uri= get(g:javadocviewer_config, 'uri', [])
-let g:javadocviewer_config.cache_dir= get(g:javadocviewer_config, 'cache_dir', g:unite_data_directory . '/.javadocviewer/')
-let g:javadocviewer_config.formatter= get(g:javadocviewer_config, 'formatter', 'simple')
+let s:V= vital#of('unite-javadoc_viewer')
+let s:F= s:V.import('System.File')
+unlet s:V
 
-command! JavadocViewerCacheClear call javadoc_viewer#cache_clear()
+function! javadoc_viewer#cache_clear()
+    if !(exists('g:javadocviewer_config') && 
+    \   has_key(g:javadocviewer_config, 'cache_dir') && 
+    \   isdirectory(g:javadocviewer_config.cache_dir))
+        echoerr 'javadoc_viewer: missing cache_dir.'
+        return
+    endif
+
+    let l:cache_dir= g:javadocviewer_config.cache_dir
+
+    call s:F.rmdir(l:cache_dir, 'r')
+endfunction
 
 let &cpo= s:save_cpo
 unlet s:save_cpo

@@ -5,3 +5,4 @@ Vim.BufferManager
 System.Cache
 Web.HTTP
 Web.HTML
+System.File

@@ -1,7 +1,7 @@
 *unite-javadoc_viewer.jax*  日本語ヘルプ
 
-Version:     0.02
-Last Change: 31-Aug-2013.
+Version:     0.03
+Last Change: 03-Sep-2013.
 Maintainer:  kamichidu <c.kamunagi@gmail.com>
 License:     The MIT License (MIT) {{{
 
@@ -35,6 +35,7 @@ License:     The MIT License (MIT) {{{
     注意                                   |unite-javadoc_viewer-warning|
     インストール                           |unite-javadoc_viewer-install|
     変数                                   |unite-javadoc_viewer-variable|
+    コマンド                               |unite-javadoc_viewer-command|
     フォーマッタ                           |unite-javadoc_viewer-formatter|
     更新履歴                               |unite-javadoc_viewer-changelog|
 
@@ -92,6 +93,13 @@ g:javadocviewer_config                        *g:javadocviewer_config*
     指定する。
 
 ==============================================================================
+コマンド                               *unite-javadoc_viewer-command*
+
+:JavadocViewerCacheClear               *:JavadocViewerCacheClear*
+
+    |g:javadocviewer_config.cache_dir|を削除する。
+
+==============================================================================
 フォーマッタ                           *unite-javadoc_viewer-formatter*
 
 フォーマッタはhtmlを受け取って、バッファに表示するテキストを返却する。
@@ -126,6 +134,11 @@ g:javadocviewer_config                        *g:javadocviewer_config*
 更新履歴                               *unite-javadoc_viewer-changelog*
 
 https://github.com/KamunagiChiduru/unite-javadoc_viewer/commits/master
+
+0.03 03-Sep-2013.
+
+    * キャッシュクリア用のコマンドを追加
+        |:JavadocViewerCacheClear|
 
 0.02 31-Aug-2013.
 
