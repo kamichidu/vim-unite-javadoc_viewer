@@ -41,7 +41,7 @@ unlet s:V
 let s:source= {
 \   'name':           'javadoc_viewer',
 \   'description':    'a javadoc viewer using unite.',
-\   'sorters':        ['sorter_word'],
+\   'sorters':        ['sorter_nothing'],
 \   'max_candidates': 100,
 \   'hooks':          {},
 \   'action_table':   {

@@ -1,6 +1,6 @@
 " ----------------------------------------------------------------------------
 " File:        autoload/javadoc_viewer/if_perl.vim
-" Last Change: 03-Sep-2013.
+" Last Change: 05-Sep-2013.
 " Maintainer:  kamichidu <c.kamunagi@gmail.com>
 " License:     The MIT License (MIT) {{{
 " 
@@ -52,7 +52,7 @@ function! javadoc_viewer#if_perl#gather_candidates(uri)
         process 'a[href]', 'links[]' => '@href';
     }->scrape(URI->new_abs('allclasses-noframe.html', $uri));
 
-    my @result= map {
+    my @result= sort { $a->{abbr} cmp $b->{abbr} } map {
         my $link= $_;
 
         # link -> canonical_name
