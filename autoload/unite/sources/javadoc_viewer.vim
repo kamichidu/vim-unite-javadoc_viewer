@@ -1,6 +1,6 @@
 " ----------------------------------------------------------------------------
 " File:        autoload/unite/sources/javadoc_viewer.vim
-" Last Change: 31-Aug-2013.
+" Last Change: 05-Sep-2013.
 " Maintainer:  kamichidu <c.kamunagi@gmail.com>
 " License:     The MIT License (MIT) {{{
 " 
@@ -121,10 +121,12 @@ function! s:source.action_table.uri.show.func(candidate) " {{{
     let l:formatter= g:javadocviewer_config.formatter
     let l:text= javadoc_viewer#formatter#{l:formatter}#format(l:response.content)
 
-    call s:BM.open('javadoc')
+    let l:bufname= 'javadocviewer - ' . a:candidate.action__canonical_name
+    call s:BM.open(l:bufname)
     setlocal bufhidden=hide buftype=nofile noswapfile nobuflisted readonly
+    let &l:filetype= 'javadocviewer'
     silent % delete _
-    silent 1 put =l:text
+    silent 0 put =l:text
     call cursor(1, 1)
 endfunction
 " }}}

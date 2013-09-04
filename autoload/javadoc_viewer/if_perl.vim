@@ -66,6 +66,8 @@ function! javadoc_viewer#if_perl#gather_candidates(uri)
             abbr => $canonical_name, 
             kind => 'uri', 
             action__path => $link->as_string, 
+            action__canonical_name => $canonical_name, 
+            action__uri => $link->as_string, 
         }
     } @{$res->{links}};
 
