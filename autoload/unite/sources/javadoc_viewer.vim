@@ -83,8 +83,8 @@ function! s:source.async_gather_candidates(args, context) " {{{
 
     let l:uri= s:L.shift(a:context.source__rest_uris)
 
-    " check cache
-    if s:C.filereadable(a:context.source__cache_dir, l:uri)
+    " check cache compatibility
+    if s:C.filereadable(a:context.source__cache_dir, l:uri) && s:check_compatibility(s:C.getfilename(a:context.source__cache_dir, l:uri))
         let l:candidates= s:C.readfile(a:context.source__cache_dir, l:uri)
 
         return map(l:candidates, 'eval(v:val)')
@@ -144,6 +144,22 @@ endfunction
 
 function! s:make_message(message) " {{{
     return 'javadocviewer: ' . string(a:message)
+endfunction
+" }}}
+
+" compatible 1, otherwise 0
+function! s:check_compatibility(cache_filename) " {{{
+    " candidate spec is changed at 6a2a3b2624639f71c87f8117a6906ffad1654d40
+    " A action__canonical_name
+    " A action__uri
+    let a:candidate= eval(get(readfile(a:cache_filename, '', 1), 0, '{}'))
+
+    if !(has_key(a:candidate, 'action__canonical_name') && has_key(a:candidate, 'action__uri'))
+        return 0
+    endif
+
+    " compatible
+    return 1
 endfunction
 " }}}
 
